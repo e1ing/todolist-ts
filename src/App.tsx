@@ -22,6 +22,9 @@ function App() {
   }
 
   function addTask(taskTitle: string) {
+    if(taskTitle.trim() === ""){
+      return
+    }
     let newTask = { id: v1(), title: taskTitle, isDone: false };
     let newTasks = [newTask, ...tasks];
     setTasks(newTasks);
