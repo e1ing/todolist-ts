@@ -14,3 +14,7 @@ display: flex;
 .error-message {
   color: red;
 }
+
+.active-filter {
+  background-color: rgb(139, 167, 218)
+}
