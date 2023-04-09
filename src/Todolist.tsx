@@ -11,10 +11,10 @@ type TodolistPropsType = {
   todolistId: string;
   title: string;
   tasks: Array<TaskType>;
-  removeTask: (taskId: string) => void;
+  removeTask: (taskId: string, todolistId: string) => void;
   changeFilter: (value: FilterValuesType, todolistId: string) => void;
-  addTask: (taskTitle: string) => void;
-  changeTaskStatus: (taskId: string, isDone: boolean) => void;
+  addTask: (taskTitle: string,  todolistId: string) => void;
+  changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void;
   filter: FilterValuesType;
 };
 
@@ -28,13 +28,13 @@ export function Todolist(props: TodolistPropsType) {
   const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     setError(null);
     if (e.ctrlKey && e.keyCode === 13) {
-      props.addTask(taskTitle);
+      props.addTask(taskTitle, props.todolistId);
       setTaskTitle("");
     }
   };
   const addTask = () => {
     if (taskTitle.trim() !== "") {
-      props.addTask(taskTitle.trim());
+      props.addTask(taskTitle.trim(), props.todolistId);
       setTaskTitle("");
     } else {
       setError("Title is required");
@@ -60,10 +60,10 @@ export function Todolist(props: TodolistPropsType) {
       <ul>
         {props.tasks.map((task) => {
           const onRemoveHandler = () => {
-            props.removeTask(task.id);
+            props.removeTask(task.id, props.todolistId);
           };
           const onChangeTaskHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeTaskStatus(task.id, e.currentTarget.checked);
+            props.changeTaskStatus(task.id, e.currentTarget.checked,  props.todolistId);
           };
           return (
             <li key={task.id} className={task.isDone ? "is-done" : ""}>
