@@ -6,7 +6,9 @@ import { v1 } from "uuid";
 import { AddItemForm } from "./AddItemForm";
 
 export type FilterValuesType = "all" | "completed" | "active";
-
+type TaskStateType = {
+  [key: string]: Array<TaskType>;
+};
 type TodolistType = {
   id: string;
   todolistTitle: string;
@@ -22,7 +24,7 @@ function App() {
     { id: todolistId2, todolistTitle: "What to buy ", filter: "completed" },
   ]);
 
-  let [tasks, setTasks] = useState({
+  let [tasks, setTasks] = useState<TaskStateType>({
     [todolistId1]: [
       { id: v1(), title: "CSS", isDone: true },
       { id: v1(), title: "JS", isDone: true },
@@ -86,7 +88,7 @@ function App() {
       todolistTitle: title,
     };
     setTodolist([todolist, ...todolists]);
-    setTasks({...tasks, [todolist.id]: []})
+    setTasks({ ...tasks, [todolist.id]: [] });
   }
 
   return (
