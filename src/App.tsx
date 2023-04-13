@@ -53,7 +53,7 @@ function App() {
     setTasks({ ...tasks });
   }
 
-  function changeTaskStatus(
+  function changeTaskStatus (
     taskId: string,
     isDone: boolean,
     todolistId: string
@@ -61,6 +61,15 @@ function App() {
     let task = tasks[todolistId].find((t) => t.id === taskId);
     if (task) {
       task.isDone = isDone;
+      tasks[todolistId] = [task, ...tasks[todolistId]];
+      setTasks({ ...tasks });
+    }
+  }
+
+  function changeTaskTitle (taskId: string,  newTitle: string, todolistId: string) {
+    let task = tasks[todolistId].find((t) => t.id === taskId);
+    if (task) {
+      task.title = newTitle;
       tasks[todolistId] = [task, ...tasks[todolistId]];
       setTasks({ ...tasks });
     }
@@ -115,6 +124,7 @@ function App() {
             changeFilter={changeFilter}
             filter={tl.filter}
             removeTodolist={removeTodolist}
+            changeTaskTitle={changeTaskTitle}
           />
         );
       })}
